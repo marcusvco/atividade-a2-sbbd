@@ -85,32 +85,34 @@ public class Main {
     }
 
     private static Minicurso criarMinicurso(){
-        Scanner input = new Scanner(System.in);
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("d/M/yyyy");
+        try (Scanner input = new Scanner(System.in)) {
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("d/M/yyyy");
 
-        System.out.print("Digite a data do minicurso: ");
-        LocalDate data = LocalDate.parse(input.nextLine(), dateFormat);
+            System.out.print("Digite a data do minicurso: ");
+            LocalDate data = LocalDate.parse(input.nextLine(), dateFormat);
 
-        System.out.print("Digite o horário de início: ");
-        LocalTime horaInicio = LocalTime.parse(input.nextLine());
+            System.out.print("Digite o horário de início: ");
+            LocalTime horaInicio = LocalTime.parse(input.nextLine());
 
-        System.out.print("Digite o horário de fim: ");
-        LocalTime horaFim = LocalTime.parse(input.nextLine());
+            System.out.print("Digite o horário de fim: ");
+            LocalTime horaFim = LocalTime.parse(input.nextLine());
 
-        return new Minicurso(data, horaInicio, horaFim);
+            return new Minicurso(data, horaInicio, horaFim);
+        }
     }
 
     private static void editarMinicurso(){
-        Scanner input = new Scanner(System.in);
-        System.out.print("Opção: ");
-        int n = input.nextInt();
+        try (Scanner input = new Scanner(System.in)) {
+            System.out.print("Opção: ");
+            int n = input.nextInt();
 
-        if(n > 0 && n <= Minicursos.getInstance().getMinicursos().size()){
-            Minicurso minicurso = criarMinicurso();
-            Minicursos.getInstance().editarMinicurso(n - 1, minicurso);
-            System.out.printf("Minicurso editado com sucesso! %s\n", minicurso);
-        }else{
-            System.out.println("Selecione um valor válido.");
+            if(n > 0 && n <= Minicursos.getInstance().getMinicursos().size()){
+                Minicurso minicurso = criarMinicurso();
+                Minicursos.getInstance().editarMinicurso(n - 1, minicurso);
+                System.out.printf("Minicurso editado com sucesso! %s\n", minicurso);
+            }else{
+                System.out.println("Selecione um valor válido.");
+            }
         }
     }
 }
