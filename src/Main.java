@@ -26,8 +26,6 @@ public class Main {
                     break;
                 case 2:
                     break;
-                case 3:
-                    break;
                 default:
                     break;
             }
@@ -56,7 +54,7 @@ public class Main {
                 "1 - Criar minicurso",
                 "2 - Editar minicurso",
                 "3 - Excluir minicurso",
-                "4 - Pesquisar minicurso",
+                "4 - Listar minicurso",
         };
         menu(opcoes);
     }
@@ -74,10 +72,14 @@ public class Main {
                 editarMinicurso();
                 break;
             case 3:
+                System.out.println("Selecione o minicurso que deseja excluir:");
+                System.out.println(Minicursos.getInstance());
+                excluirMinicurso();
                 System.out.println("Minicurso excluido com sucesso!");
                 break;
             case 4:
-                System.out.println("Minicurso: ");
+                System.out.println(Minicursos.getInstance());
+                System.out.println("Minicursos listados com sucesso!");
                 break;
             default:
                 break;
@@ -85,34 +87,46 @@ public class Main {
     }
 
     private static Minicurso criarMinicurso(){
-        try (Scanner input = new Scanner(System.in)) {
-            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("d/M/yyyy");
+        Scanner input = new Scanner(System.in);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("d/M/yyyy");
 
-            System.out.print("Digite a data do minicurso: ");
-            LocalDate data = LocalDate.parse(input.nextLine(), dateFormat);
+        System.out.print("Digite a data do minicurso: ");
+        LocalDate data = LocalDate.parse(input.nextLine(), dateFormat);
 
-            System.out.print("Digite o horário de início: ");
-            LocalTime horaInicio = LocalTime.parse(input.nextLine());
+        System.out.print("Digite o horário de início: ");
+        LocalTime horaInicio = LocalTime.parse(input.nextLine());
 
-            System.out.print("Digite o horário de fim: ");
-            LocalTime horaFim = LocalTime.parse(input.nextLine());
+        System.out.print("Digite o horário de fim: ");
+        LocalTime horaFim = LocalTime.parse(input.nextLine());
 
-            return new Minicurso(data, horaInicio, horaFim);
-        }
+        return new Minicurso(data, horaInicio, horaFim);
     }
 
     private static void editarMinicurso(){
-        try (Scanner input = new Scanner(System.in)) {
-            System.out.print("Opção: ");
-            int n = input.nextInt();
+        Scanner input = new Scanner(System.in);
+        System.out.print("Opção: ");
+        int n = input.nextInt();
 
-            if(n > 0 && n <= Minicursos.getInstance().getMinicursos().size()){
-                Minicurso minicurso = criarMinicurso();
-                Minicursos.getInstance().editarMinicurso(n - 1, minicurso);
-                System.out.printf("Minicurso editado com sucesso! %s\n", minicurso);
-            }else{
-                System.out.println("Selecione um valor válido.");
-            }
+        if(n > 0 && n <= Minicursos.getInstance().getMinicursos().size()){
+            Minicurso minicurso = criarMinicurso();
+            Minicursos.getInstance().editarMinicurso(n - 1, minicurso);
+            System.out.printf("Minicurso editado com sucesso! %s\n", minicurso);
+        }else{
+            System.out.println("Selecione um valor válido.");
+        }
+    }
+
+    private static void excluirMinicurso(){
+        Scanner input = new Scanner(System.in);
+        System.out.print("Opção: ");
+        int n = input.nextInt();
+
+        if(n > 0 && n <= Minicursos.getInstance().getMinicursos().size()){
+            Minicurso minicurso = Minicursos.getInstance().getMinicursos().get(n - 1);
+            Minicursos.getInstance().removerMinicurso(minicurso);
+            System.out.printf("Minicurso removido com sucesso! %s\n", minicurso);
+        }else{
+            System.out.println("Selecione um valor válido.");
         }
     }
 }

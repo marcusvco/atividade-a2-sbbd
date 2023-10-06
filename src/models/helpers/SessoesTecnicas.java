@@ -35,6 +35,6 @@ public class SessoesTecnicas {
         for(int i = 0; i < sessoes.size(); i++){
             sessaoTecnicaList.append(String.format("%s - %s\n", i + 1, sessoes.get(i)));
         }
-        return "Minicursos[\n" + sessaoTecnicaList + "]";
+        return "SessoesTecnicas[\n" + sessaoTecnicaList + "]";
     }
 }
